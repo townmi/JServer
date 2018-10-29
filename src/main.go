@@ -13,12 +13,15 @@ func main() {
 
 	login := r.Group("/login")
 	{
-		login.POST("/account", restful.Login)
+		login.POST("/account", restful.AccountLogin)
 		login.POST("/sms", restful.Login)
 		login.POST("/wechat", restful.Login)
 	}
 
-	r.GET("/city", restful.GetCityList)
+	public := r.Group("/public")
+	{
+		public.GET("/city", restful.GetCityList)
+	}
 
 	r.Run(":3000")
 }
