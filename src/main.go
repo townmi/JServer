@@ -18,9 +18,15 @@ func main() {
 		login.POST("/wechat", restful.Login)
 	}
 
+	register := r.Group("/register")
+	{
+		register.POST("account", restful.AccountRegister)
+	}
+
 	public := r.Group("/public")
 	{
 		public.GET("/city", restful.GetCityList)
+		public.GET("/captcha", restful.CreateMathCaptcha)
 	}
 
 	r.Run(":3000")

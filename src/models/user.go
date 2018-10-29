@@ -1,5 +1,12 @@
 package models
 
+import (
+	"fmt"
+
+	"github.com/google/uuid"
+	"github.com/jinzhu/gorm"
+)
+
 // User models
 type User struct {
 	ID           string `gorm:"column:id;type:varchar(50);primary_key"`
@@ -14,4 +21,12 @@ type User struct {
 	CreatedAt    int64  `gorm:"column:created_at;"`
 	UpdatedAt    int64  `gorm:"column:updated_at;"`
 	BindMobileAt int64  `gorm:"column:bind_mobile_at;"`
+	Password     string `gorm:"column:password;"`
+}
+
+// BeforeCreate s
+func (user *User) BeforeCreate(scope *gorm.Scope) error {
+	scope.SetColumn("ID", uuid.New())
+	fmt.Println(uuid.New())
+	return nil
 }
