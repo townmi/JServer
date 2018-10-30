@@ -1,22 +1,27 @@
 package sqls
 
 import (
+	"fmt"
+
 	models "../models"
 	utils "../utils"
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql" // sd
 )
 
 // RegisterUser s
 func RegisterUser(user map[string]string) (bool, error) {
-	db, err := gorm.Open("mysql", "root:abcd1234@tcp(10.211.55.4:3306)/JHome?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open("mysql", "root:abcd1234@tcp(127.0.0.1:3306)/JHome?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		// return error
 		return false, nil
 	}
 	defer db.Close()
+	db.LogMode(true)
 	count := 0
-	db.Where("Email = ?", user["email"]).Count(&count)
+	db.Model(&models.User{}).Where("Email = ?", user["email"]).Count(&count)
+	fmt.Println(count)
 	if count != 0 {
 		return false, nil
 	}
@@ -24,7 +29,8 @@ func RegisterUser(user map[string]string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	u := models.User{Email: user["email"], Password: p}
+	fmt.Println(p)
+	u := models.User{ID: uuid.New().String(), Email: user["email"], Password: p}
 	db.Create(&u)
 	return true, nil
 }

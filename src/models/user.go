@@ -1,15 +1,13 @@
 package models
 
 import (
-	"fmt"
-
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 )
 
 // User models
 type User struct {
-	ID           string `gorm:"column:id;type:varchar(50);primary_key"`
+	ID           string `gorm:"column:id;type:varchar(50);primary_key;not null;"`
 	Mobile       string `gorm:"column:mobile;type:varchar(20);"`
 	Email        string `gorm:"column:email;type:varchar(100);"`
 	Level        int    `gorm:"column:level;type:int(10);"`
@@ -27,6 +25,9 @@ type User struct {
 // BeforeCreate s
 func (user *User) BeforeCreate(scope *gorm.Scope) error {
 	scope.SetColumn("ID", uuid.New())
-	fmt.Println(uuid.New())
+	user.ID = uuid.New().String()
 	return nil
+}
+func (User) TableName() string {
+	return "users"
 }
