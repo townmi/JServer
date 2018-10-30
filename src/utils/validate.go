@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ValidateRequestForm s
 func ValidateRequestForm(c *gin.Context, m map[string]string) bool {
 	// keys := make([]int, 0, len(m))
 	for k := range m {

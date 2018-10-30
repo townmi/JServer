@@ -28,6 +28,8 @@ func (user *User) BeforeCreate(scope *gorm.Scope) error {
 	user.ID = uuid.New().String()
 	return nil
 }
+
+// TableName s
 func (User) TableName() string {
 	return "users"
 }

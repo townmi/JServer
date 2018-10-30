@@ -12,7 +12,7 @@ import (
 
 // RegisterUser s
 func RegisterUser(user map[string]string) (bool, error) {
-	db, err := gorm.Open("mysql", "root:abcd1234@tcp(127.0.0.1:3306)/JHome?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open(utils.GetDataBaseConnection())
 	if err != nil {
 		// return error
 		return false, nil

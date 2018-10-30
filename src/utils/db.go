@@ -11,7 +11,7 @@ import (
 // CheckDataBase s
 func CheckDataBase() {
 	// CREATE DATABASE IF NOT EXISTS JHome DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
-	db, err := gorm.Open("mysql", "root:abcd1234@tcp(127.0.0.1:3306)/JHome?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open(GetDataBaseConnection())
 	if err != nil {
 		panic("failed to connect database")
 	}
