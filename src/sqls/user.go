@@ -1,7 +1,7 @@
 package sqls
 
 import (
-	"fmt"
+	"errors"
 
 	models "../models"
 	utils "../utils"
@@ -11,26 +11,46 @@ import (
 )
 
 // RegisterUser s
-func RegisterUser(user map[string]string) (bool, error) {
+func RegisterUser(user map[string]string) error {
 	db, err := gorm.Open(utils.GetDataBaseConnection())
 	if err != nil {
 		// return error
-		return false, nil
+		return err
 	}
 	defer db.Close()
 	db.LogMode(true)
 	count := 0
 	db.Model(&models.User{}).Where("Email = ?", user["email"]).Count(&count)
-	fmt.Println(count)
 	if count != 0 {
-		return false, nil
+		return errors.New("this email is registed")
 	}
 	p, err := utils.Encode(user["password"])
 	if err != nil {
-		return false, err
+		return errors.New("password is not safety")
 	}
-	fmt.Println(p)
 	u := models.User{ID: uuid.New().String(), Email: user["email"], Password: p}
 	db.Create(&u)
-	return true, nil
+	return nil
+}
+
+// ValidateUser s
+func ValidateUser(user map[string]string) error {
+	db, err := gorm.Open(utils.GetDataBaseConnection())
+	if err != nil {
+		// return error
+		return err
+	}
+	defer db.Close()
+	db.LogMode(true)
+
+	p, err := utils.Encode(user["password"])
+	if err != nil {
+		return errors.New("password is not safety")
+	}
+	count := 0
+	db.Model(&models.User{}).Where("Email = ? AND password = ?", user["email"], p).Count(&count)
+	if count == 0 {
+		return errors.New("account is not right!")
+	}
+	return nil
 }

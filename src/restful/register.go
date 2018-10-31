@@ -21,18 +21,21 @@ func AccountRegister(c *gin.Context) {
 		"password": "",
 		"captcha":  "",
 	}
-	isValidate := utils.ValidateRequestForm(c, account)
-
-	if isValidate {
-		if !verfiyCaptcha(account["captcha"]) {
-			c.JSON(http.StatusOK, utils.StandardErrorMessage("captcha"))
-			return
-		}
-		success, err := sqls.RegisterUser(account)
-		if err != nil || !success {
-			c.JSON(http.StatusOK, utils.StandardFailMessage("register user"))
-			return
-		}
-		c.JSON(http.StatusOK, utils.StandardSuccessMessage("register user"))
+	err := utils.ValidateRequestForm(c, account)
+	if err != nil {
+		c.JSON(http.StatusOK, utils.StandardFailMessage(err.Error()))
+		return
 	}
+	if !verfiyCaptcha(account["captcha"]) {
+		c.JSON(http.StatusOK, utils.StandardErrorMessage("captcha"))
+		return
+	}
+
+	registerErr := sqls.RegisterUser(account)
+	if registerErr != nil {
+		c.JSON(http.StatusOK, utils.StandardFailMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, utils.StandardSuccessMessage("register user"))
+
 }

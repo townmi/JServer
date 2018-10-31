@@ -3,11 +3,8 @@ package utils
 import "github.com/gin-gonic/gin"
 
 // StandardEmptyMessage s
-func StandardEmptyMessage(key string) interface{} {
-	return gin.H{
-		"status":  "fail",
-		"message": key + " is not allowed empty!",
-	}
+func StandardEmptyMessage(key string) string {
+	return key + " is not allowed empty!"
 }
 
 // StandardErrorMessage s
@@ -19,10 +16,10 @@ func StandardErrorMessage(key string) interface{} {
 }
 
 // StandardFailMessage s
-func StandardFailMessage(key string) interface{} {
+func StandardFailMessage(err string) interface{} {
 	return gin.H{
 		"status":  "fail",
-		"message": key + " fail!",
+		"message": err,
 	}
 }
 

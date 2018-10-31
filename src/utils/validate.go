@@ -1,22 +1,21 @@
 package utils
 
 import (
-	"net/http"
+	"errors"
 
 	"github.com/gin-gonic/gin"
 )
 
 // ValidateRequestForm s
-func ValidateRequestForm(c *gin.Context, m map[string]string) bool {
+func ValidateRequestForm(c *gin.Context, m map[string]string) error {
 	// keys := make([]int, 0, len(m))
 	for k := range m {
 		// keys = append(keys, k)
 		v := c.PostForm(k)
 		if v == "" {
-			c.JSON(http.StatusOK, StandardEmptyMessage(k))
-			return false
+			return errors.New(StandardEmptyMessage(k))
 		}
 		m[k] = v
 	}
-	return true
+	return nil
 }
