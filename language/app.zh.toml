@@ -1,0 +1,15 @@
+HelloPerson = "Hello {{.Name}}"
+
+[ResponseNotAllowedEmptyMessage]
+description = "{{.Key}} is not allowed empty!"
+
+[TokenValidationError]
+other = "That's not even a token"
+[TokenValidationErrorExpired]
+other = "Token is expired"
+[TokenValidationErrorNotValidYet]
+other = "Token not active yet"
+[TokenHandleError]
+other = "Couldn't handle this token"
+[TokenEmptyError]
+other = "请求未携带token，无权限访问"

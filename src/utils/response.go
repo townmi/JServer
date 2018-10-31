@@ -1,10 +1,21 @@
 package utils
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
+)
 
 // StandardEmptyMessage s
 func StandardEmptyMessage(key string) string {
-	return key + " is not allowed empty!"
+	return GetLocalizer("zh", "zh").MustLocalize(&i18n.LocalizeConfig{
+		DefaultMessage: &i18n.Message{
+			ID:          "ResponseNotAllowedEmptyMessage",
+			Description: "{{.Key}} is not allowed empty!",
+		},
+		TemplateData: map[string]string{
+			"Key": key,
+		},
+	})
 }
 
 // StandardErrorMessage s

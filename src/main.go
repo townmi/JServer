@@ -29,5 +29,11 @@ func main() {
 		public.GET("/captcha", restful.CreateMathCaptcha)
 	}
 
+	auth := r.Group("/auth")
+	auth.Use(utils.JWTAuth())
+	{
+		auth.GET("/captcha", restful.CreateMathCaptcha)
+	}
+
 	r.Run(":3000")
 }
