@@ -1,15 +1,15 @@
 HelloPerson = "Hello {{.Name}}"
 
 [ResponseNotAllowedEmptyMessage]
-description = "{{.Key}} is not allowed empty!"
+description = "{{.Key}} 不允许空!"
 
 [TokenValidationError]
-other = "That's not even a token"
+other = "请求非法，请退出重试"
 [TokenValidationErrorExpired]
-other = "Token is expired"
+other = "登录状态已过期，请重新登录"
 [TokenValidationErrorNotValidYet]
-other = "Token not active yet"
+other = "请求非法，请退出重试"
 [TokenHandleError]
-other = "Couldn't handle this token"
+other = "请求非法，请退出重试"
 [TokenEmptyError]
-other = "请求未携带token，无权限访问"
+other = "无权限访问"

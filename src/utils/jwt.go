@@ -16,12 +16,14 @@ type JWT struct {
 
 // Claims s
 type Claims struct {
-	ID string `json:"id"`
-	jwt.StandardClaims
+	ID                 string `json:"id"`
+	UserName           string `json:"username"`
+	Mobile             string `json:"mobile"`
+	jwt.StandardClaims `json:"standard"`
 }
 
 var (
-	signKey string = "test"
+	SignKey string = "harry.tang"
 )
 
 // NewJWT s
@@ -33,7 +35,7 @@ func NewJWT() *JWT {
 
 // GetSignKey s
 func GetSignKey() string {
-	return signKey
+	return SignKey
 }
 
 // CreateToken s
@@ -91,7 +93,7 @@ func tokenValidationErrorString(lang string) string {
 	return GetLocalizer(lang, lang).MustLocalize(&i18n.LocalizeConfig{
 		DefaultMessage: &i18n.Message{
 			ID:    "TokenValidationError",
-			Other: "That's not even a token",
+			Other: "Request is illegal, please quit retry",
 		},
 	})
 }
@@ -100,7 +102,7 @@ func tokenValidationErrorExpiredString(lang string) string {
 	return GetLocalizer(lang, lang).MustLocalize(&i18n.LocalizeConfig{
 		DefaultMessage: &i18n.Message{
 			ID:    "TokenValidationErrorExpired",
-			Other: "Token is expired",
+			Other: "Login status has expired, please log in again",
 		},
 	})
 }
@@ -109,7 +111,7 @@ func tokenValidationErrorNotValidYetString(lang string) string {
 	return GetLocalizer(lang, lang).MustLocalize(&i18n.LocalizeConfig{
 		DefaultMessage: &i18n.Message{
 			ID:    "TokenValidationErrorNotValidYet",
-			Other: "Token not active yet",
+			Other: "Request is illegal, please quit retry",
 		},
 	})
 }
@@ -118,7 +120,7 @@ func tokenHandleErrorString(lang string) string {
 	return GetLocalizer(lang, lang).MustLocalize(&i18n.LocalizeConfig{
 		DefaultMessage: &i18n.Message{
 			ID:    "TokenHandleError",
-			Other: "Couldn't handle this token",
+			Other: "Request is illegal, please quit retry",
 		},
 	})
 }
@@ -127,7 +129,7 @@ func tokenEmptyString(lang string) string {
 	return GetLocalizer(lang, lang).MustLocalize(&i18n.LocalizeConfig{
 		DefaultMessage: &i18n.Message{
 			ID:    "TokenEmptyError",
-			Other: "请求未携带token，无权限访问",
+			Other: "No access",
 		},
 	})
 }

@@ -23,6 +23,7 @@ func StandardErrorMessage(key string) interface{} {
 	return gin.H{
 		"status":  "fail",
 		"message": key + " is error!",
+		"code":    0,
 	}
 }
 
@@ -31,6 +32,7 @@ func StandardFailMessage(err string) interface{} {
 	return gin.H{
 		"status":  "fail",
 		"message": err,
+		"code":    0,
 	}
 }
 
@@ -39,5 +41,6 @@ func StandardSuccessMessage(key string) interface{} {
 	return gin.H{
 		"status":  "success",
 		"message": key + " success!",
+		"code":    1,
 	}
 }

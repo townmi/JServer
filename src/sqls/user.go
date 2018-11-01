@@ -34,23 +34,24 @@ func RegisterUser(user map[string]string) error {
 }
 
 // ValidateUser s
-func ValidateUser(user map[string]string) error {
+func ValidateUser(user map[string]string) (*models.User, error) {
 	db, err := gorm.Open(utils.GetDataBaseConnection())
 	if err != nil {
 		// return error
-		return err
+		return nil, err
 	}
 	defer db.Close()
 	db.LogMode(true)
 
 	p, err := utils.Encode(user["password"])
 	if err != nil {
-		return errors.New("password is not safety")
+		return nil, errors.New("password is not safety")
 	}
-	count := 0
-	db.Model(&models.User{}).Where("Email = ? AND password = ?", user["email"], p).Count(&count)
-	if count == 0 {
-		return errors.New("account is not right!")
+
+	u := models.User{}
+	db.Where("Email = ? AND password = ?", user["email"], p).Find(&u)
+	if u.ID == "" {
+		return nil, errors.New("account is not right!")
 	}
-	return nil
+	return &u, nil
 }
