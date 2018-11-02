@@ -10,7 +10,7 @@ func main() {
 	utils.CheckDataBase()
 	gin.SetMode(gin.DebugMode)
 	r := gin.Default()
-
+	r.Use(utils.CorsMiddleware())
 	login := r.Group("/login")
 	{
 		login.POST("/account", restful.AccountLogin)
@@ -33,6 +33,11 @@ func main() {
 	auth.Use(utils.JWTAuth())
 	{
 		auth.GET("/captcha", restful.CreateMathCaptcha)
+	}
+
+	goods := r.Group("/goods")
+	{
+		goods.POST("/create", restful.CreateGoods)
 	}
 
 	r.Run(":3000")

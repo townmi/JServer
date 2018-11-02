@@ -1,7 +1,7 @@
 HelloPerson = "Hello {{.Name}}"
 
 [ResponseNotAllowedEmptyMessage]
-description = "{{.Key}} 不允许空!"
+other = "{{.Key}} 不允许空!"
 
 [TokenValidationError]
 other = "请求非法，请退出重试"

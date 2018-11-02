@@ -20,7 +20,7 @@ func RegisterUser(user map[string]string) error {
 	defer db.Close()
 	db.LogMode(true)
 	count := 0
-	db.Model(&models.User{}).Where("Email = ?", user["email"]).Count(&count)
+	db.Model(&models.User{}).Where("email = ?", user["email"]).Count(&count)
 	if count != 0 {
 		return errors.New("this email is registed")
 	}

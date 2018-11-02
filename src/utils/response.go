@@ -9,8 +9,8 @@ import (
 func StandardEmptyMessage(key string) string {
 	return GetLocalizer("zh", "zh").MustLocalize(&i18n.LocalizeConfig{
 		DefaultMessage: &i18n.Message{
-			ID:          "ResponseNotAllowedEmptyMessage",
-			Description: "{{.Key}} is not allowed empty!",
+			ID:    "ResponseNotAllowedEmptyMessage",
+			Other: "{{.Key}} is not allowed empty!",
 		},
 		TemplateData: map[string]string{
 			"Key": key,

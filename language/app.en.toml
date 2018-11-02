@@ -1,7 +1,7 @@
 HelloPerson = "Hello {{.Name}}"
 
 [ResponseNotAllowedEmptyMessage]
-description = "{{.Key}} is not allowed empty!"
+other = "{{.Key}} is not allowed empty!"
 
 [TokenValidationError]
 other = "Request is illegal, please quit retry"

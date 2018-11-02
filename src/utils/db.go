@@ -41,4 +41,9 @@ func CheckDataBase() {
 		db.CreateTable(&models.Goods{})
 		fmt.Println("goods table created")
 	}
+	isGoodsPicturesExist := db.HasTable("goods_pictures")
+	if !isGoodsPicturesExist {
+		db.CreateTable(&models.GoodsPictures{})
+		fmt.Println("goods_pictures table created")
+	}
 }
