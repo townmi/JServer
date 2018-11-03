@@ -38,6 +38,7 @@ func main() {
 	goods := r.Group("/goods")
 	{
 		goods.POST("/create", restful.CreateGoods)
+		goods.GET("/list", restful.GetGoodsList)
 	}
 
 	r.Run(":3000")

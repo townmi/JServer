@@ -51,7 +51,7 @@ func ValidateUser(user map[string]string) (*models.User, error) {
 	u := models.User{}
 	db.Where("Email = ? AND password = ?", user["email"], p).Find(&u)
 	if u.ID == "" {
-		return nil, errors.New("account is not right!")
+		return nil, errors.New("account is not right")
 	}
 	return &u, nil
 }

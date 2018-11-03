@@ -1,7 +1,8 @@
 package models
 
 import (
-	"github.com/google/uuid"
+	"time"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -20,12 +21,13 @@ type User struct {
 	UpdatedAt    int64  `gorm:"column:updated_at;"`
 	BindMobileAt int64  `gorm:"column:bind_mobile_at;"`
 	Password     string `gorm:"column:password;"`
+	Points       int64  `gorm:"column:points"`
 }
 
 // BeforeCreate s
 func (user *User) BeforeCreate(scope *gorm.Scope) error {
-	scope.SetColumn("ID", uuid.New())
-	user.ID = uuid.New().String()
+	scope.SetColumn("created_at", time.Now().Unix()*1000)
+	scope.SetColumn("updated_at", time.Now().Unix()*1000)
 	return nil
 }
 

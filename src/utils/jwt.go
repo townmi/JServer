@@ -23,7 +23,8 @@ type Claims struct {
 }
 
 var (
-	SignKey string = "harry.tang"
+	// SignKey s
+	SignKey = "harry.tang"
 )
 
 // NewJWT s
