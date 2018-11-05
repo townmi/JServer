@@ -14,6 +14,12 @@ type JWT struct {
 	SigningKey []byte
 }
 
+type User struct {
+	ID       string `json:"id"`
+	UserName string `json:"username"`
+	Mobile   string `json:"mobile"`
+}
+
 // Claims s
 type Claims struct {
 	ID                 string `json:"id"`

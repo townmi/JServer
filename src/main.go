@@ -41,5 +41,5 @@ func main() {
 		goods.GET("/list", restful.GetGoodsList)
 	}
 
-	r.Run(":3000")
+	r.Run(":" + utils.GetServerPost())
 }

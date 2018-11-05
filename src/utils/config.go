@@ -19,6 +19,7 @@ type TomlConfig struct {
 // OwnerInfo s
 type OwnerInfo struct {
 	Name string
+	Port string
 	Org  string `toml:"organization"`
 	Bio  string
 	DOB  time.Time
@@ -60,4 +61,12 @@ func GetDataBaseConnection() (string, string) {
 		connection = "root:abcd1234@tcp(" + conf.DB.Server + ":" + conf.DB.Ports + ")/JHome?charset=utf8&parseTime=True&loc=Local"
 	}
 	return conf.DB.Dirver, connection
+}
+
+// GetServerPost s
+func GetServerPost() string {
+	if conf.Owner.Port != "" {
+		return conf.Owner.Port
+	}
+	return "3000"
 }

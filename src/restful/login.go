@@ -30,7 +30,7 @@ func AccountLogin(c *gin.Context) {
 	account := map[string]string{
 		"email":    "",
 		"password": "",
-		"captcha":  "",
+		// "captcha":  "",
 	}
 	err := utils.ValidateRequestForm(c, account)
 	if err != nil {
@@ -38,10 +38,10 @@ func AccountLogin(c *gin.Context) {
 		return
 	}
 
-	if !verfiyCaptcha(account["captcha"]) {
-		c.JSON(http.StatusOK, utils.StandardErrorMessage("captcha"))
-		return
-	}
+	// if !verfiyCaptcha(account["captcha"]) {
+	// 	c.JSON(http.StatusOK, utils.StandardErrorMessage("captcha"))
+	// 	return
+	// }
 
 	u, err := sqls.ValidateUser(account)
 	if err != nil {
@@ -53,6 +53,17 @@ func AccountLogin(c *gin.Context) {
 		c.JSON(http.StatusOK, utils.StandardFailMessage(err.Error()))
 		return
 	}
+	// cookie := &http.Cookie{
+	// 	Name:     "id_token",
+	// 	Value:    res.Token,
+	// 	Path:     "/",
+	// 	Domain:   c.ConfGet("server.domain"),
+	// 	HttpOnly: true,
+	// 	MaxAge:   10,
+	// }
+	// http.SetCookie(c.Writer, cookie)
+
+	c.SetCookie("id_token", res.Token, 30, "/", "goubaa.com", false, true)
 
 	c.JSON(http.StatusOK, gin.H{
 		"status": "success",
