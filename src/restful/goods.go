@@ -63,3 +63,56 @@ func GetGoodsList(c *gin.Context) {
 		"code":   1,
 	})
 }
+
+// CreateBrand s
+func CreateBrand(c *gin.Context) {
+	brand := map[string]string{
+		"name": "",
+		"logo": "",
+	}
+
+	err := utils.ValidateRequestForm(c, brand)
+	if err != nil {
+		c.JSON(http.StatusOK, utils.StandardFailMessage(err.Error()))
+		return
+	}
+
+	createErr := sqls.CreateBrand(brand)
+	if createErr != nil {
+		c.JSON(http.StatusOK, utils.StandardFailMessage(createErr.Error()))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "success",
+		"data":   brand,
+		"code":   1,
+	})
+}
+
+// GetBrandList s
+func GetBrandList(c *gin.Context) {
+	filter := map[string]string{
+		"limit":  "",
+		"offset": "",
+		"sort":   "",
+	}
+
+	err := utils.ValidateRequestQuery(c, filter)
+	if err != nil {
+		c.JSON(http.StatusOK, utils.StandardFailMessage(err.Error()))
+		return
+	}
+
+	rows, err := sqls.QueryBrandList(filter)
+	if err != nil {
+		c.JSON(http.StatusOK, utils.StandardFailMessage(err.Error()))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "success",
+		"data":   rows,
+		"code":   1,
+	})
+}
