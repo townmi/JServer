@@ -53,22 +53,10 @@ func CheckDataBase() {
 		fmt.Println("goods_pictures table created")
 	}
 
-	isGoodsFirstTypeExist := db.HasTable("goods_first_types")
+	isGoodsFirstTypeExist := db.HasTable("goods_types")
 	if !isGoodsFirstTypeExist {
-		db.CreateTable(&models.GoodsFirstType{})
-		fmt.Println("goods_first_types table created")
-	}
-
-	isGoodsSecondTypeExist := db.HasTable("goods_second_types")
-	if !isGoodsSecondTypeExist {
-		db.CreateTable(&models.GoodsSecondType{})
-		fmt.Println("goods_second_types table created")
-	}
-
-	isGoodsThirdTypeExist := db.HasTable("goods_third_types")
-	if !isGoodsThirdTypeExist {
-		db.CreateTable(&models.GoodsThirdType{})
-		fmt.Println("goods_third_types table created")
+		db.CreateTable(&models.GoodsType{})
+		fmt.Println("goods_types table created")
 	}
 
 	isGoodsBrandExist := db.HasTable("goods_brands")

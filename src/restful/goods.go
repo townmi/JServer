@@ -16,6 +16,7 @@ func CreateGoods(c *gin.Context) {
 		"desc":    "",
 		"picture": "",
 		"price":   "",
+		"type":    "",
 	}
 
 	err := utils.ValidateRequestForm(c, goods)
@@ -105,6 +106,60 @@ func GetBrandList(c *gin.Context) {
 	}
 
 	rows, err := sqls.QueryBrandList(filter)
+	if err != nil {
+		c.JSON(http.StatusOK, utils.StandardFailMessage(err.Error()))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "success",
+		"data":   rows,
+		"code":   1,
+	})
+}
+
+// CreateGoodsType s
+func CreateGoodsType(c *gin.Context) {
+	goodsType := map[string]string{
+		"name":     "",
+		"picture":  "",
+		"parentId": "",
+	}
+
+	err := utils.ValidateRequestForm(c, goodsType)
+	if err != nil {
+		c.JSON(http.StatusOK, utils.StandardFailMessage(err.Error()))
+		return
+	}
+
+	createErr := sqls.CreateGoodsType(goodsType)
+	if createErr != nil {
+		c.JSON(http.StatusOK, utils.StandardFailMessage(createErr.Error()))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "success",
+		"data":   goodsType,
+		"code":   1,
+	})
+}
+
+// GetGoodsTypeList s
+func GetGoodsTypeList(c *gin.Context) {
+	filter := map[string]string{
+		"limit":  "",
+		"offset": "",
+		"sort":   "",
+	}
+
+	err := utils.ValidateRequestQuery(c, filter)
+	if err != nil {
+		c.JSON(http.StatusOK, utils.StandardFailMessage(err.Error()))
+		return
+	}
+
+	rows, err := sqls.QueryGoodsTypeList(filter)
 	if err != nil {
 		c.JSON(http.StatusOK, utils.StandardFailMessage(err.Error()))
 		return

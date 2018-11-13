@@ -12,7 +12,7 @@ func ValidateRequestForm(c *gin.Context, m map[string]string) error {
 	for k := range m {
 		// keys = append(keys, k)
 		v := c.PostForm(k)
-		if v == "" {
+		if v == "" && k != "parentId" {
 			return errors.New(StandardEmptyMessage(k))
 		}
 		m[k] = v

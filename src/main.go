@@ -42,6 +42,9 @@ func main() {
 
 		goods.POST("/brand/create", restful.CreateBrand)
 		goods.GET("/brand/list", restful.GetBrandList)
+
+		goods.POST("/type/create", restful.CreateGoodsType)
+		goods.GET("/type/list", restful.GetGoodsTypeList)
 	}
 
 	r.Run(":" + utils.GetServerPost())

@@ -8,22 +8,18 @@ import (
 
 // Goods s
 type Goods struct {
-	ID                  string  `gorm:"column:id;type:varchar(50);primary_key"`
-	GoodsName           string  `gorm:"column:name;"`
-	GoodsSKU            string  `gorm:"column:sku"`
-	GoodsDesc           string  `gorm:"column:desc"`
-	GoodsPicture        string  `gorm:"column:picture"`
-	GoodsPrice          float64 `gorm:"column:price"`
-	GoodsFirstTypeID    string  `gorm:"column:f_type_id;type:varchar(50)"`
-	GoodsFirstTypeName  string  `gorm:"column:f_type_name;"`
-	GoodsSecondTypeID   string  `gorm:"column:s_type_id;type:varchar(50)"`
-	GoodsSecondTypeName string  `gorm:"column:s_type_name;"`
-	GoodsThirdTypeID    string  `gorm:"column:t_type_id;type:varchar(50)"`
-	GoodsThirdTypeName  string  `gorm:"column:t_type_name;"`
-	GoodsBrandID        string  `gorm:"column:brand_id;type:varchar(50)"`
-	GoodsBrandName      string  `gorm:"column:brand_name;"`
-	CreatedAt           int64   `gorm:"column:created_at;"`
-	UpdatedAt           int64   `gorm:"column:updated_at;"`
+	ID             string  `gorm:"column:id;type:varchar(50);primary_key"`
+	GoodsName      string  `gorm:"column:name;"`
+	GoodsSKU       string  `gorm:"column:sku"`
+	GoodsDesc      string  `gorm:"column:desc"`
+	GoodsPicture   string  `gorm:"column:picture"`
+	GoodsPrice     float64 `gorm:"column:price"`
+	GoodsBrandID   string  `gorm:"column:brand_id;type:varchar(50)"`
+	GoodsBrandName string  `gorm:"column:brand_name;"`
+	CreatedAt      int64   `gorm:"column:created_at;"`
+	UpdatedAt      int64   `gorm:"column:updated_at;"`
+
+	GoodsType GoodsType `gorm:"ForeignKey:type_id;"`
 }
 
 // GoodsResType s
@@ -34,6 +30,8 @@ type GoodsResType struct {
 	GoodsDesc    string  `gorm:"column:desc;" json:"desc"`
 	GoodsPicture string  `gorm:"column:picture;" json:"picture"`
 	GoodsPrice   float64 `gorm:"column:price;" json:"price"`
+
+	GoodsType GoodsType `gorm:"ForeignKey:type_id;"`
 }
 
 // GoodsPicture s
@@ -45,31 +43,14 @@ type GoodsPicture struct {
 	UpdatedAt int64  `gorm:"column:updated_at;"`
 }
 
-// GoodsFirstType s
-type GoodsFirstType struct {
-	ID        string `gorm:"column:id;type:varchar(50);primary_key"`
-	Name      string `gorm:"column:name;"`
-	Picture   string `gorm:"column:picture"`
-	CreatedAt int64  `gorm:"column:created_at;"`
-	UpdatedAt int64  `gorm:"column:updated_at;"`
-}
-
-// GoodsSecondType s
-type GoodsSecondType struct {
-	ID        string `gorm:"column:id;type:varchar(50);primary_key"`
-	Name      string `gorm:"column:name;"`
-	Picture   string `gorm:"column:picture"`
-	CreatedAt int64  `gorm:"column:created_at;"`
-	UpdatedAt int64  `gorm:"column:updated_at;"`
-}
-
-// GoodsThirdType s
-type GoodsThirdType struct {
-	ID        string `gorm:"column:id;type:varchar(50);primary_key"`
-	Name      string `gorm:"column:name;"`
-	Picture   string `gorm:"column:picture"`
-	CreatedAt int64  `gorm:"column:created_at;"`
-	UpdatedAt int64  `gorm:"column:updated_at;"`
+// GoodsType s
+type GoodsType struct {
+	ID        string `gorm:"column:id;type:varchar(50);primary_key" json:"id"`
+	Name      string `gorm:"column:name;" json:"name"`
+	ParentID  string `gorm:"column:parent_id;" json:"parentId"`
+	Picture   string `gorm:"column:picture" json:"picture"`
+	CreatedAt int64  `gorm:"column:created_at;" json:"createdAt"`
+	UpdatedAt int64  `gorm:"column:updated_at;" json:"updatedAt"`
 }
 
 // GoodsBrand s
@@ -118,36 +99,12 @@ func (goodsPicture *GoodsPicture) BeforeCreate(scope *gorm.Scope) error {
 }
 
 // TableName s
-func (GoodsFirstType) TableName() string {
-	return "goods_first_types"
+func (GoodsType) TableName() string {
+	return "goods_types"
 }
 
 // BeforeCreate s
-func (goodsFirstType *GoodsFirstType) BeforeCreate(scope *gorm.Scope) error {
-	scope.SetColumn("created_at", time.Now().Unix()*1000)
-	scope.SetColumn("updated_at", time.Now().Unix()*1000)
-	return nil
-}
-
-// TableName s
-func (GoodsSecondType) TableName() string {
-	return "goods_second_types"
-}
-
-// BeforeCreate s
-func (goodsSecondType *GoodsSecondType) BeforeCreate(scope *gorm.Scope) error {
-	scope.SetColumn("created_at", time.Now().Unix()*1000)
-	scope.SetColumn("updated_at", time.Now().Unix()*1000)
-	return nil
-}
-
-// TableName s
-func (GoodsThirdType) TableName() string {
-	return "goods_third_types"
-}
-
-// BeforeCreate s
-func (goodsThirdType *GoodsThirdType) BeforeCreate(scope *gorm.Scope) error {
+func (goodsType *GoodsType) BeforeCreate(scope *gorm.Scope) error {
 	scope.SetColumn("created_at", time.Now().Unix()*1000)
 	scope.SetColumn("updated_at", time.Now().Unix()*1000)
 	return nil
