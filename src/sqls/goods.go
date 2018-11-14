@@ -34,16 +34,14 @@ func CreateGoods(goods map[string]string) error {
 		GoodsDesc:    goods["desc"],
 		GoodsPicture: goods["picture"],
 		GoodsPrice:   price,
-		GoodsType: models.GoodsType{
-			ID: goods["type"],
-		},
+		GoodsTypeID:  goods["type"],
 	}
 	db.Create(&g)
 	return nil
 }
 
 // QueryGoodsList s
-func QueryGoodsList(filter map[string]string) ([]models.Goods, error) {
+func QueryGoodsList(filter map[string]string) ([]models.GoodsResType, error) {
 	db, err := gorm.Open(utils.GetDataBaseConnection())
 	if err != nil {
 		panic("failed to connect database")
@@ -51,7 +49,7 @@ func QueryGoodsList(filter map[string]string) ([]models.Goods, error) {
 	defer db.Close()
 	db.LogMode(true)
 
-	ls := []models.Goods{}
+	ls := []models.GoodsResType{}
 	var limit int64
 	if filter["limit"] != "" {
 		l, err := strconv.ParseInt(filter["limit"], 10, 32)

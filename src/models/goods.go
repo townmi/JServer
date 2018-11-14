@@ -8,30 +8,32 @@ import (
 
 // Goods s
 type Goods struct {
-	ID             string  `gorm:"column:id;type:varchar(50);primary_key"`
-	GoodsName      string  `gorm:"column:name;"`
-	GoodsSKU       string  `gorm:"column:sku"`
-	GoodsDesc      string  `gorm:"column:desc"`
-	GoodsPicture   string  `gorm:"column:picture"`
-	GoodsPrice     float64 `gorm:"column:price"`
-	GoodsBrandID   string  `gorm:"column:brand_id;type:varchar(50)"`
-	GoodsBrandName string  `gorm:"column:brand_name;"`
-	CreatedAt      int64   `gorm:"column:created_at;"`
-	UpdatedAt      int64   `gorm:"column:updated_at;"`
-
-	GoodsType GoodsType `gorm:"ForeignKey:type_id;"`
+	ID           string     `gorm:"column:id;type:varchar(50);primary_key"`
+	GoodsName    string     `gorm:"column:name;"`
+	GoodsSKU     string     `gorm:"column:sku"`
+	GoodsDesc    string     `gorm:"column:desc"`
+	GoodsPicture string     `gorm:"column:picture"`
+	GoodsPrice   float64    `gorm:"column:price"`
+	CreatedAt    int64      `gorm:"column:created_at;"`
+	UpdatedAt    int64      `gorm:"column:updated_at;"`
+	GoodsTypeID  string     `gorm:"column:type_id;"`
+	GoodsType    GoodsType  `gorm:"ForeignKey:type_id;"`
+	GoodsBrandID string     `gorm:"column:brand_id;"`
+	GoodsBrand   GoodsBrand `gorm:"ForeignKey:brand_id;"`
 }
 
 // GoodsResType s
 type GoodsResType struct {
-	ID           string  `gorm:"column:id;" json:"id"`
-	GoodsName    string  `gorm:"column:name;" json:"name"`
-	GoodsSKU     string  `gorm:"column:sku;" json:"sku"`
-	GoodsDesc    string  `gorm:"column:desc;" json:"desc"`
-	GoodsPicture string  `gorm:"column:picture;" json:"picture"`
-	GoodsPrice   float64 `gorm:"column:price;" json:"price"`
-
-	GoodsType GoodsType `gorm:"ForeignKey:type_id;"`
+	ID           string     `gorm:"column:id;" json:"id"`
+	GoodsName    string     `gorm:"column:name;" json:"name"`
+	GoodsSKU     string     `gorm:"column:sku;" json:"sku"`
+	GoodsDesc    string     `gorm:"column:desc;" json:"desc"`
+	GoodsPicture string     `gorm:"column:picture;" json:"picture"`
+	GoodsPrice   float64    `gorm:"column:price;" json:"price"`
+	GoodsTypeID  string     `gorm:"column:type_id;" json:"typeId"`
+	GoodsType    GoodsType  `gorm:"ForeignKey:type_id;" json:"type"`
+	GoodsBrandID string     `gorm:"column:brandId;"`
+	GoodsBrand   GoodsBrand `gorm:"ForeignKey:brand;"`
 }
 
 // GoodsPicture s
